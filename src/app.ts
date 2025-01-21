@@ -8,3 +8,5 @@ import { Server } from "./presentation/server"
 function main() {
     Server.start()
 };
+
+// JSON Server sirve para hacer prototipos de apis o pruebas
