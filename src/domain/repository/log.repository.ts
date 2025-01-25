@@ -13,4 +13,4 @@ export abstract class LogRepository {
 
 // permitira llamar metodos que se encuentran en el Datasource porque no llegamos directamente al datasource, lo hacemos dentro del repositorio.
 
-// El repository permitira llamar al datasource
+// El repository permitira llamar al datasource por eso tiene los mismos metodos

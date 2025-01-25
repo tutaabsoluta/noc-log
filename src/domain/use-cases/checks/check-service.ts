@@ -12,23 +12,29 @@
 // La clase tiene dos parametros obligatorios
 // los callbakcs de ID permite manejar el comportamiento de la clase y no es responsabilidad de la clase manejar esa implementacion
 
+import { LogEntity, LogSeverityLevel } from "../../entities/log.entity";
+import { LogRepository } from "../../repository/log.repository";
+
 // Tu caso de uso no tiene lógica específica de implementación para "qué hacer" en caso de éxito o error. Esto se delega a los callbacks, lo que hace que sea flexible y fácilmente extensible.
 // Delegamos la logica de exito y error
 
+// es normal que un caso de uso termine inyectando o implementando un repository
+// use-case -> repository -> datasource
 
 export interface CheckServiceUseCase {
     execute( url: string ): Promise<boolean>
 };
 
-
-type SuccessCallback = () => void;
-type ErrorCallback = ( error: string ) => void;
+// argumentos opcionales
+type SuccessCallback = (() => void) | undefined;
+type ErrorCallback = (( error: string ) => void) | undefined;
 
 export class CheckService implements CheckServiceUseCase {
 
     constructor(
+        private readonly logRepository: LogRepository,
         private readonly successCallback: SuccessCallback,
-        private readonly errorCallback: ErrorCallback 
+        private readonly errorCallback: ErrorCallback, 
     ) {};
 
     async execute( url: string ): Promise<boolean> {
@@ -39,11 +45,16 @@ export class CheckService implements CheckServiceUseCase {
                 throw new Error(`Error on check service ${ url }`)
             }
 
-            this.successCallback();
+            const log = new LogEntity(`Service ${url} working`, LogSeverityLevel.low );
+            this.logRepository.saveLog( log );
+            this.successCallback && this.successCallback();
             return true
 
         } catch (error) {
-            this.errorCallback(`${ error }`)
+            const errorMessage = `${ url } is not ok. ${error}`
+            const log = new LogEntity( errorMessage , LogSeverityLevel.high );
+            this.logRepository.saveLog( log );
+            this.errorCallback && this.errorCallback( errorMessage );
             return false;
         };
     };

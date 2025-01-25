@@ -19,7 +19,7 @@ export class LogEntity {
         this.createdAt = new Date();
     };
 
-    // Crear instancias basado en un json
+    // Crear instancias LogEntity basado en un JSON
     static fromJson = ( json: string ):LogEntity => {
 
         const { message, level, createdAt } = JSON.parse(json)
