@@ -22,39 +22,39 @@ import { LogRepository } from "../../repository/log.repository";
 // use-case -> repository -> datasource
 
 export interface CheckServiceUseCase {
-    execute( url: string ): Promise<boolean>
+    execute(url: string): Promise<boolean>
 };
 
 // argumentos opcionales
 type SuccessCallback = (() => void) | undefined;
-type ErrorCallback = (( error: string ) => void) | undefined;
+type ErrorCallback = ((error: string) => void) | undefined;
 
 export class CheckService implements CheckServiceUseCase {
 
     constructor(
         private readonly logRepository: LogRepository,
         private readonly successCallback: SuccessCallback,
-        private readonly errorCallback: ErrorCallback, 
-    ) {};
+        private readonly errorCallback: ErrorCallback,
+    ) { };
 
-    async execute( url: string ): Promise<boolean> {
+    async execute(url: string): Promise<boolean> {
 
         try {
-            const req = await fetch( url );
-            if ( !req.ok ) {
-                throw new Error(`Error on check service ${ url }`)
+            const req = await fetch(url);
+            if (!req.ok) {
+                throw new Error(`Error on check service ${url}`)
             }
 
-            const log = new LogEntity(`Service ${url} working`, LogSeverityLevel.low );
-            this.logRepository.saveLog( log );
+            const log = new LogEntity({ message: `Service ${url} working`, level: LogSeverityLevel.low, origin: 'check-service.ts' });
+            this.logRepository.saveLog(log);
             this.successCallback && this.successCallback();
             return true
 
         } catch (error) {
-            const errorMessage = `${ url } is not ok. ${error}`
-            const log = new LogEntity( errorMessage , LogSeverityLevel.high );
-            this.logRepository.saveLog( log );
-            this.errorCallback && this.errorCallback( errorMessage );
+            const errorMessage = `${url} is not ok. ${error}`
+            const log = new LogEntity({ message: errorMessage, level: LogSeverityLevel.high, origin: 'check-service.ts' });
+            this.logRepository.saveLog(log);
+            this.errorCallback && this.errorCallback(errorMessage);
             return false;
         };
     };

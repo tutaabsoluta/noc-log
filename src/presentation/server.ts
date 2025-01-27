@@ -23,7 +23,7 @@ export class Server {
             '*/5 * * * * *',
             () => {
 
-                const url = 'http://localhost:3000/';
+                const url = 'https://google.com/';
                 
                 new CheckService(
                     fileSystemRepository,

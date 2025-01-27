@@ -1,4 +1,4 @@
-import { envs } from "./config/plugins/envs.plugin";
+import { Server } from "./presentation/server";
 
 
 ( async () => {
@@ -6,11 +6,7 @@ import { envs } from "./config/plugins/envs.plugin";
 })();
 
 function main() {
-    // Server.start()
-    console.log(envs.PORT)
-    console.log(envs.MAILER_EMAIL)
-    console.log(envs.MAILER_SECRET_KEY)
-
+    Server.start()
 };
 
 // JSON Server sirve para hacer prototipos de apis o pruebas
