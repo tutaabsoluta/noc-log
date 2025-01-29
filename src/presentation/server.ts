@@ -1,6 +1,7 @@
 // a capa de presentación (Server) controla cuándo y cómo se ejecuta el caso de uso CheckService. Además, usa el adaptador CronService para programar tareas repetitivas.
 
 import { CheckService } from "../domain/use-cases/checks/check-service";
+import { SendEmailLogs } from "../domain/use-cases/email/send-email-logs";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
 import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository.impl";
 import { CronService } from "./cron/cron-service"
@@ -11,6 +12,9 @@ import { EmailService } from "./email/email.service";
 const fileSystemRepository = new LogRepositoryImpl(
     new FileSystemDatasource()
 );
+
+const emailService = new EmailService();
+
 
 // En nuestro server start definimos los jobs
 export class Server {
@@ -34,17 +38,9 @@ export class Server {
             }
         );
 
-        const emailService = new EmailService();
-        emailService.sendEmail({
-            to: '538ser@gmail.com',
-            subject: 'Sergio',
-            htmlBody: `
-                <h3>Logs de sistema - NOC</h3>
-                <p>AJSDFLAKSJDFJALSDFLJKASJLDKF</p>
-                <p>Ver logs adjuntos</p>
-            `
-        })
+        new SendEmailLogs(emailService, fileSystemRepository ).execute('538ser@gmail.com')
     };
 };
 
 
+// Las dependencias son inyectadas en los casos de uso o en los servicios
