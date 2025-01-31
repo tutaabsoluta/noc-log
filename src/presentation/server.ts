@@ -1,5 +1,3 @@
-// a capa de presentación (Server) controla cuándo y cómo se ejecuta el caso de uso CheckService. Además, usa el adaptador CronService para programar tareas repetitivas.
-
 import { CheckService } from "../domain/use-cases/checks/check-service";
 import { SendEmailLogs } from "../domain/use-cases/email/send-email-logs";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
@@ -16,7 +14,6 @@ const fileSystemRepository = new LogRepositoryImpl(
 const emailService = new EmailService();
 
 
-// En nuestro server start definimos los jobs
 export class Server {
 
     public static start() {
@@ -43,4 +40,3 @@ export class Server {
 };
 
 
-// Las dependencias son inyectadas en los casos de uso o en los servicios

@@ -39,5 +39,5 @@ export class SendEmailLogs implements SendLogEmailUseCase {
             this.logRepository.saveLog(log)
             return false
         }
-    }
-}
+    };
+};

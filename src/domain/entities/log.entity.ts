@@ -1,4 +1,3 @@
-// entidad: algo que va a llegar a la base de datos.Lo que grabamos en BD pero no es la BD. Quien gobierna la app cuando trabajamos con las entidades
 
 export enum LogSeverityLevel {
     low = 'low',

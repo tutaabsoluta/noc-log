@@ -1,13 +1,8 @@
-// En el momento que se cree la instancia, llama al constructor y este verifica que tengamos los archivos, si no existen los crea 
-// La implementacion es el codigo que me comprometi a hacer en la capa domain.
-// FileSystemDatasource esta obligado a implementar los metodos definidos en LogDatasource
-
 import fs from 'fs';
 import { LogDatasource } from "../../domain/datasources/log.datasource";
 import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
 
 
-// Implementacion de datasource parea crear paths donde se guardaran los logs
 export class FileSystemDatasource implements LogDatasource {
 
     private readonly logPath = 'logs/';
@@ -37,7 +32,7 @@ export class FileSystemDatasource implements LogDatasource {
 
     };
 
-    // Se graba un log segun su severidad
+    // Save logs according to the severity
     async saveLog(newLog: LogEntity): Promise<void> {
 
         const logAsJson = `${JSON.stringify(newLog)}\n`;
