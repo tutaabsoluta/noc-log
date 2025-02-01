@@ -36,7 +36,9 @@ export class Server {
         );
 
         new SendEmailLogs(emailService, fileSystemRepository ).execute('538ser@gmail.com')
+
     };
 };
 
 
+// docker-compose: instrucciones para levantar imagen de MongoDB

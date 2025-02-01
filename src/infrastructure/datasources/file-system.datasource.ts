@@ -75,7 +75,5 @@ export class FileSystemDatasource implements LogDatasource {
     };
 };
 
-// El constructor se ejecuta cuando se instancia una clase
-// tan pronto se instancie la clase se crea el dir, por el metodo del constructor
 
 // Se debe convertir el log en una entidad, ya que el log es un JSON
