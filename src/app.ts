@@ -1,5 +1,5 @@
 import { envs } from "./config/plugins/envs.plugin";
-import { LogModel, MongoDatabase } from "./data/mongo";
+import { MongoDatabase } from "./data/mongo";
 import { Server } from "./presentation/server";
 
 
@@ -13,21 +13,8 @@ async function main() {
         mongoUrl: envs.MONGO_URL
     });
 
-    // Crear una coleccion = tables, documento = registro
-    const newLog = await LogModel.create({
-        message: 'Test message from mongo',
-        origin: 'app.ts',
-        level: "low",
-    });
+    Server.start()
 
-    // Grabar en Mongo
-    await newLog.save();
 
-    console.log(newLog)
-
-    const logs = await (await LogModel.find({level: 'medium'}))
-    console.log(logs)
-
-    // Server.start()
 };
 

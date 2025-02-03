@@ -7,3 +7,7 @@ dist/git
 logs/
 
 .env
+
+mongo/
+
+postgres/
