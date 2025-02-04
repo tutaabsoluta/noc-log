@@ -1,4 +1,5 @@
 import { CheckService } from "../domain/use-cases/checks/check-service";
+import { CheckServiceMultiple } from "../domain/use-cases/checks/check-service-multiple";
 import { SendEmailLogs } from "../domain/use-cases/email/send-email-logs";
 import { FileSystemDatasource } from "../infrastructure/datasources/file-system.datasource";
 import { MongoLogDatasource } from "../infrastructure/datasources/MongoLogDatasource";
@@ -9,17 +10,24 @@ import { EmailService } from "./email/email.service";
 
 
 // Crear instancia para mandarsela a los use-cases que ocupen el repo
-// const fileSystemRepository = new LogRepositoryImpl(
-//     new FileSystemDatasource()
-// );
-
-// const mongoDbRepository = new LogRepositoryImpl(
-//     new MongoLogDatasource()
-// )
+const fileSystemRepository = new LogRepositoryImpl(
+    new FileSystemDatasource()
+);
 
 const mongoDbRepository = new LogRepositoryImpl(
+    new MongoLogDatasource()
+)
+
+
+const PostgreDbRepository = new LogRepositoryImpl(
     new PostgresLogDatasource()
 )
+
+const repositories = [
+    fileSystemRepository,
+    mongoDbRepository,
+    PostgreDbRepository
+];
 
 const emailService = new EmailService();
 
@@ -30,20 +38,20 @@ export class Server {
         
         console.log('Server started...')
 
-        CronService.createJob(
-            '*/5 * * * * *',
-            () => {
+        // CronService.createJob(
+        //     '*/5 * * * * *',
+        //     () => {
 
-                const url = 'https://googlasdfe.com/';
+        //         const url = 'https://googlasdfe.com/';
                 
-                new CheckService(
-                    mongoDbRepository,
-                    () => console.log('Success'),
-                    ( error ) => console.log(`${error}`)
+        //         new CheckServiceMultiple(
+        //             repositories,
+        //             () => console.log('Success'),
+        //             ( error ) => console.log(`${error}`)
                     
-                ).execute( url );
-            }
-        );
+        //         ).execute( url );
+        //     }
+        // );
 
         // new SendEmailLogs(emailService, fileSystemRepository ).execute('538ser@gmail.com')
 
