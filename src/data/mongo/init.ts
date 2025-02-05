@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
-// Evita tener dependencias ocultas
+// avoid hidden dependencies
 interface ConnectionOptions {
     mongoUrl: string;
     dbName: string;
-}
+};
 
 export class MongoDatabase {
     static async connect ( options: ConnectionOptions ) {
@@ -14,12 +14,13 @@ export class MongoDatabase {
 
             await mongoose.connect( mongoUrl, {
                 dbName: dbName,
-            } )
+            } );
 
-            console.log('Mongo connected!')
+            // console.log('Mongo connected!');
+            return true;
 
         } catch (error) {
-            console.log('Mongo connection error')
+            // console.log('Mongo connection error');
             throw error;
         }
     };

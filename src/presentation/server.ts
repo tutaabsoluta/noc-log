@@ -38,20 +38,20 @@ export class Server {
         
         console.log('Server started...')
 
-        // CronService.createJob(
-        //     '*/5 * * * * *',
-        //     () => {
+        CronService.createJob(
+            '*/5 * * * * *',
+            () => {
 
-        //         const url = 'https://googlasdfe.com/';
+                const url = 'https://googlasdfe.com/';
                 
-        //         new CheckServiceMultiple(
-        //             repositories,
-        //             () => console.log('Success'),
-        //             ( error ) => console.log(`${error}`)
+                new CheckServiceMultiple(
+                    repositories,
+                    () => console.log('Success'),
+                    ( error ) => console.log(`${error}`)
                     
-        //         ).execute( url );
-        //     }
-        // );
+                ).execute( url );
+            }
+        );
 
         // new SendEmailLogs(emailService, fileSystemRepository ).execute('538ser@gmail.com')
 
