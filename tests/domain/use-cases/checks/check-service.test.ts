@@ -1,6 +1,6 @@
-import { LogEntity } from '../../../src/domain/entities/log.entity';
-import { LogRepository } from '../../../src/domain/repository/log.repository';
-import{ CheckService } from '../../../src/domain/use-cases/checks/check-service'
+import { LogEntity } from '../../../../src/domain/entities/log.entity';
+import { LogRepository } from '../../../../src/domain/repository/log.repository';
+import{ CheckService } from '../../../../src/domain/use-cases/checks/check-service'
 
 // Test the dependencies (repository, callbacks) and the fetch
 describe('check-service.test.ts', () => { 
@@ -42,7 +42,7 @@ describe('check-service.test.ts', () => {
         )
      });
 
-    test('should call errpr callback when fetch returns false', async () => { 
+    test('should call error callback when fetch returns false', async () => { 
 
         const wasOk = await checkService.execute('https://googleasdfasfd.com');
 
