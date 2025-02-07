@@ -18,6 +18,5 @@ mongo-test/
 
 postgres-test/
 
-tests
 
 coverage
